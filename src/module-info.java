@@ -4,5 +4,5 @@
 /**
  * 
  */
-module Jabacate {
+module Aula2 {
 }
