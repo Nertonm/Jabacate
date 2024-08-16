@@ -1,6 +1,3 @@
-/**
- * 
- */
 package MiniProjeto;
 
 /*
@@ -10,13 +7,13 @@ package MiniProjeto;
  */
 public class Clube {
 	/*** @param args*/
-	String nome;
-	int pontos;
-	int saldoGols;
+	public String nome;
+	public int pontos;
+	public int saldoGols;
 	
-	void ganhar(int pontos, int saldoGols) {}
-	void empatar(int pontos, int saldoGols) {}
-	void perder(int pontos, int saldoGols) {}
+	public void ganhar(int pontos, int saldoGols) {}
+	public void empatar(int pontos, int saldoGols) {}
+	public void perder(int pontos, int saldoGols) {}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
