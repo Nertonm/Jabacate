@@ -1,12 +1,22 @@
 package MiniProjeto;
 import java.util.Random;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class Campeonato {
 	public Clube[] clubes;
 	public void jogarCampeonato(Clube[] clubes) {
 		/*deverá fazer um arranjo da coleção de clubes 2 a 2, de forma que cada clube 
 		  jogue com todos os outros clubes do campeonato em um jogo de ida e um jogo de volta. */
-		
+		int qtdClubes = clubes.length;
+		for (int i = 0; i < qtdClubes; i++) {
+			for(int j = i+1; j < qtdClubes; j++) {
+				jogarPartida(clubes[i], clubes[j]);
+				jogarPartida(clubes[j], clubes[i]);
+			}
+		}
+		getClassificacao();
+		getCampeao();
 	}
 	private void jogarPartida(Clube m, Clube v) {
 		/* irá sortear um placar como sendo dois inteiros entre 0 e 5 representando a quantidade de gols que cada time marcou. 
@@ -28,7 +38,18 @@ public class Campeonato {
 		}
 
 	}
-	public void getClassificacao() {}
-	public void getCampeao() {}
-	
+	public void getClassificacao() {
+		Arrays.sort(clubes, new Comparator<Clube>(){
+			public int compare(Clube m, Clube v){
+				if (m.pontos == v.pontos) {
+					return m.saldoGols - v.saldoGols;
+				}
+				return m.pontos - v.pontos;
+			}
+		});
+	}
+	public void getCampeao() {
+        System.out.println("O campeão é: " + clubes[0].nome);
+	}
+
 }
