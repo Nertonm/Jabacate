@@ -1,4 +1,5 @@
 package MiniProjeto;
+import java.util.Random;
 
 public class Campeonato {
 	public Clube[] clubes;
@@ -10,6 +11,14 @@ public class Campeonato {
 	private void jogarPartida(Clube m, Clube v) {
 		/* irá sortear um placar como sendo dois inteiros entre 0 e 5 representando a quantidade de gols que cada time marcou. 
 		Após esse sorteio, o método verifica o resultado, chamando os respectivos métodos para ganhar, empatar e perder dos dois clubes */
+        Random random = new Random();
+		int golsM = random.nextInt(6);
+		int golsV = random.nextInt(6);
+		if (golsM == golsV) {
+		}
+		if (golsM >= golsV) {
+		}
+
 	}
 	public void getClassificacao() {}
 	public void getCampeao() {}
