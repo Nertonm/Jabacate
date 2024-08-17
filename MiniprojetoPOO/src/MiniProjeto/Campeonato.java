@@ -21,30 +21,45 @@ public class Campeonato {
 	private void jogarPartida(Clube m, Clube v) {
 		/* irá sortear um placar como sendo dois inteiros entre 0 e 5 representando a quantidade de gols que cada time marcou. 
 		Após esse sorteio, o método verifica o resultado, chamando os respectivos métodos para ganhar, empatar e perder dos dois clubes */
-		
+        String novaLinha = System.lineSeparator();
         Random random = new Random();
 		int golsM = random.nextInt(6);
 		int golsV = random.nextInt(6);
 		if (golsM == golsV) {
 			m.empatar();
 			v.empatar();
+	        System.out.print(m.nome + " empatou com " + v.nome);
+	        System.out.print(novaLinha);
+	        System.out.print("placar: " + golsM + " a " + golsM);
+	        System.out.print(novaLinha);
+	        System.out.print(novaLinha);
 		}
-		if (golsM >= golsV) {
+		else if (golsM > golsV) {
 			m.ganhar(golsM - golsV);
 			v.perder(golsV - golsM);
+	        System.out.print(m.nome + " ganhou de " + v.nome);
+	        System.out.print(novaLinha);
+	        System.out.print("placar: " + golsM +  " a " + golsV);
+	        System.out.print(novaLinha);
+	        System.out.print(novaLinha);
 		} else {
 			m.perder(golsM - golsV);
 			v.ganhar(golsV - golsM);
+	        System.out.print(v.nome + " ganhou de " + m.nome);
+	        System.out.print(novaLinha);
+	        System.out.print("placar:  " + golsV +  " a " + golsM);
+	        System.out.print(novaLinha);
+	        System.out.print(novaLinha);
 		}
-
 	}
+	
 	public void getClassificacao() {
 		Arrays.sort(clubes, new Comparator<Clube>(){
 			public int compare(Clube m, Clube v){
 				if (m.pontos == v.pontos) {
-					return m.saldoGols - v.saldoGols;
+					return v.saldoGols - m.saldoGols;
 				}
-				return m.pontos - v.pontos;
+				return v.pontos - m.pontos;
 			}
 		});
 	}
@@ -52,9 +67,8 @@ public class Campeonato {
         String novaLinha = System.lineSeparator();
 		int qtdClubes = clubes.length;
 		for (int i = 0; i < qtdClubes; i++) {
-	        System.out.print(i+1);
-	        System.out.print(" Lugar: ");
-	        System.out.print(clubes[i].nome);
+	        System.out.print(i + 1 + " Lugar: ");
+	        System.out.print(clubes[i].nome + " com " + clubes[i].pontos + " pontos e " + clubes[i].saldoGols + " de saldo gols");
 	        System.out.print(novaLinha);
 		}
 	}
