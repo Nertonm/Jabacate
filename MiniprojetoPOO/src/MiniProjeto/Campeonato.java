@@ -68,6 +68,9 @@ public class Campeonato {
 	public void getCampeao() {
         String novaLinha = System.lineSeparator();
 		int qtdClubes = clubes.length;
+        System.out.print("========================================\n");
+        System.out.print("|                Podio                 |\n");
+        System.out.print("========================================\n");
 		for (int i = 0; i < qtdClubes; i++) {
 	        System.out.print(i + 1 + " Lugar: ");
 	        System.out.print(clubes[i].nome + " com " + clubes[i].pontos + " pontos e " + clubes[i].saldoGols + " de saldo gols");

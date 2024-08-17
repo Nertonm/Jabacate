@@ -17,6 +17,9 @@ public class Teste {
         }	while (numClubes < 2 || numClubes % 2 != 0);
 	    Scanner scanf = new Scanner(System.in);
     	Clube[] clubes = new Clube[numClubes];
+        System.out.print("========================================\n");
+        System.out.print("|          Iniciando Campeonato        |\n");
+        System.out.print("========================================\n");
         for(int i = 0; i < numClubes; i++) {
 	        System.out.print("========================================\n");
 	        System.out.print("|           Nome do Clube?             |\n");
