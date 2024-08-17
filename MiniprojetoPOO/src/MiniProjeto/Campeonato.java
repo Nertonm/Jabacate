@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public class Campeonato {
 	public Clube[] clubes;
-	public void jogarCampeonato(Clube[] clubes) {
+	public void jogarCampeonato() {
 		/*deverá fazer um arranjo da coleção de clubes 2 a 2, de forma que cada clube 
 		  jogue com todos os outros clubes do campeonato em um jogo de ida e um jogo de volta. */
 		int qtdClubes = clubes.length;
@@ -49,7 +49,14 @@ public class Campeonato {
 		});
 	}
 	public void getCampeao() {
-		
+        String novaLinha = System.lineSeparator();
+		int qtdClubes = clubes.length;
+		for (int i = 0; i < qtdClubes; i++) {
+	        System.out.print(i+1);
+	        System.out.print(" Lugar: ");
+	        System.out.print(clubes[i].nome);
+	        System.out.print(novaLinha);
+		}
 	}
 
 }

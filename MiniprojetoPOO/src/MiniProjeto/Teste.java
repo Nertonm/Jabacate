@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Teste {
 
 	public static void main(String[] args) {
-	    Scanner scanf = new Scanner(System.in);
+	    Scanner primeiraPergunta = new Scanner(System.in);
         int numClubes = -2;
         do {
         System.out.print("========================================\n");
@@ -13,9 +13,9 @@ public class Teste {
         }
         System.out.print("|           Quantos Clubes?            |\n");
         System.out.print("========================================\n");
-        numClubes = scanf.nextInt();
+        numClubes = primeiraPergunta.nextInt();
         }	while (numClubes < 2 || numClubes % 2 != 0);
-        numClubes++; // To match array size
+	    Scanner scanf = new Scanner(System.in);
     	Clube[] clubes = new Clube[numClubes];
         for(int i = 0; i < numClubes; i++) {
 	        System.out.print("========================================\n");
@@ -24,6 +24,9 @@ public class Teste {
 			clubes[i] = new Clube();
 			clubes[i].nome = scanf.nextLine();
         }
+        Campeonato campeonato = new Campeonato();
+        campeonato.clubes = clubes;
+		campeonato.jogarCampeonato();        
 	}
-	
+
 }
