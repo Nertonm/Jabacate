@@ -11,17 +11,14 @@ public class Clube {
 	public int pontos;
 	public int saldoGols;
 	
-	public void ganhar(int saldoGols) {
+	public void ganhar(int saldo) {
 		pontos += 3;
+		saldoGols += saldo;
 	}
 	public void empatar() {
 		pontos++;
 	}
-	public void perder(int saldoGols) {}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public void perder(int saldo) {
+		saldoGols += saldo;
 	}
-
 }

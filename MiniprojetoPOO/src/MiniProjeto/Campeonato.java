@@ -49,7 +49,7 @@ public class Campeonato {
 		});
 	}
 	public void getCampeao() {
-        System.out.println("O campeão é: " + clubes[0].nome);
+		
 	}
 
 }
