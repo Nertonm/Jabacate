@@ -15,9 +15,11 @@ public class Clube {
 		pontos += 3;
 		saldoGols += saldo;
 	}
+	
 	public void empatar() {
 		pontos++;
 	}
+	
 	public void perder(int saldo) {
 		saldoGols += saldo;
 	}

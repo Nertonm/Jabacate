@@ -18,6 +18,7 @@ public class Campeonato {
 		getClassificacao();
 		getCampeao();
 	}
+	
 	private void jogarPartida(Clube m, Clube v) {
 		/* irá sortear um placar como sendo dois inteiros entre 0 e 5 representando a quantidade de gols que cada time marcou. 
 		Após esse sorteio, o método verifica o resultado, chamando os respectivos métodos para ganhar, empatar e perder dos dois clubes */
@@ -63,6 +64,7 @@ public class Campeonato {
 			}
 		});
 	}
+	
 	public void getCampeao() {
         String novaLinha = System.lineSeparator();
 		int qtdClubes = clubes.length;
@@ -72,5 +74,4 @@ public class Campeonato {
 	        System.out.print(novaLinha);
 		}
 	}
-
 }
