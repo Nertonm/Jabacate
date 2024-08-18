@@ -29,28 +29,20 @@ public class Campeonato {
 		if (golsM == golsV) {
 			m.empatar();
 			v.empatar();
-	        System.out.print(m.nome + " empatou com " + v.nome);
-	        System.out.print(novaLinha);
-	        System.out.print("placar: " + golsM + " a " + golsM);
-	        System.out.print(novaLinha);
-	        System.out.print(novaLinha);
+	        System.out.print(m.nome + " empatou com " + v.nome + novaLinha);
+	        System.out.print("placar: " + golsM + " a " + golsM + novaLinha + novaLinha);
 		}
 		else if (golsM > golsV) {
 			m.ganhar(golsM - golsV);
 			v.perder(golsV - golsM);
-	        System.out.print(m.nome + " ganhou de " + v.nome);
-	        System.out.print(novaLinha);
-	        System.out.print("placar: " + golsM +  " a " + golsV);
-	        System.out.print(novaLinha);
-	        System.out.print(novaLinha);
+	        System.out.print(m.nome + " ganhou de " + v.nome + novaLinha);
+	        System.out.print("placar: " + golsM +  " a " + golsV + novaLinha + novaLinha);
+
 		} else {
 			m.perder(golsM - golsV);
 			v.ganhar(golsV - golsM);
-	        System.out.print(v.nome + " ganhou de " + m.nome);
-	        System.out.print(novaLinha);
-	        System.out.print("placar:  " + golsV +  " a " + golsM);
-	        System.out.print(novaLinha);
-	        System.out.print(novaLinha);
+	        System.out.print(v.nome + " ganhou de " + m.nome + novaLinha);
+	        System.out.print("placar:  " + golsV +  " a " + golsM + novaLinha + novaLinha);
 		}
 	}
 	
@@ -73,8 +65,7 @@ public class Campeonato {
         System.out.print("========================================\n");
 		for (int i = 0; i < qtdClubes; i++) {
 	        System.out.print(i + 1 + " Lugar: ");
-	        System.out.print(clubes[i].nome + " com " + clubes[i].pontos + " pontos e " + clubes[i].saldoGols + " de saldo gols");
-	        System.out.print(novaLinha);
+	        System.out.print(clubes[i].nome + " com " + clubes[i].pontos + " pontos e " + clubes[i].saldoGols + " de saldo gols" + novaLinha);
 		}
 	}
 }
