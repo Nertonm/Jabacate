@@ -5,7 +5,7 @@ public class Teste {
 
 	public static void main(String[] args) {
 	    Scanner primeiraPergunta = new Scanner(System.in);
-        int numClubes = -2;
+        int numClubes = 2;
         do {
         System.out.print("========================================\n");
         if (numClubes < 2) {
