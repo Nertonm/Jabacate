@@ -8,13 +8,13 @@ public class Teste {
         int numClubes = -2;
         do {
         System.out.print("========================================\n");
-        if (numClubes % 2 != 0) {
+        if (numClubes < 2) {
         	System.out.print("|           Selecione Novamente        |\n");
         }
         System.out.print("|           Quantos Clubes?            |\n");
         System.out.print("========================================\n");
         numClubes = primeiraPergunta.nextInt();
-        }	while (numClubes < 2 || numClubes % 2 != 0);
+        }	while (numClubes < 2);
 	    Scanner scanf = new Scanner(System.in);
     	Clube[] clubes = new Clube[numClubes];
         System.out.print("========================================\n");
