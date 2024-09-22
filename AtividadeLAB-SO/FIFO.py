@@ -1,22 +1,25 @@
 import os
 import psutil
+import time
+import random
 
-def make_dummy_process(lst):
-    for i, value in enumerate(lst):
-        pid = os.fork()
-        if pid == 0:
-            # Processo filho
-            print(f"Processo filho {i} - valor da lista: {value}, PID: {os.getpid()}, PPID: {os.getppid()}")
-            os._exit(0)  # Termina o processo filho após realizar seu trabalho
-        else:
-            # Processo pai
-            print(f"Processo pai criou processo filho {i} com PID: {pid}")
+def executar_processo(pid, tempo_execucao):
+    print(f"Processo {pid} iniciado com tempo de execução: {tempo_execucao:.2f} segundos.")
+    time.sleep(tempo_execucao)
+    print(f"Processo {pid} concluído.")
 
+def fifo(processos):
+    print("\nExecutando Escalonamento FIFO:")
+    for pid, tempo in processos:
+            executar_processo(pid, tempo)
 
 def main():
-    tamanho = int(input("Digite o tamanho da lista: "))
-    lst = list(range(1, tamanho + 1))
-    make_dummy_process(lst)
+    processos = []
+    n = int(input("Digite o número de processos: "))
+    for i in range(n):
+        tempo_execucao = random.uniform(1, 5)  # Tempo de execução aleatório entre 1 e 5 segundos
+        processos.append((i + 1, tempo_execucao))
+        print(f"Processo {i + 1} criado com tempo de execução: {tempo_execucao:.2f} segundos.")
     print("""
         Selecione o escalanador:
         1- FIFO
@@ -24,7 +27,13 @@ def main():
         3- ROUND ROBIN
         4- PRIORIDADE
     """)
-
+    while True:
+        escolha = input("Digite sua escolha ou 'sair' para encerrar: ")
+        if escolha.lower() == 'sair':
+            break
+        else:
+            if escolha == "1":
+                fifo(processos)
 
 if __name__ == "__main__":
     main()
