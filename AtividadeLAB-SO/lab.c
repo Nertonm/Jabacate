@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <signal.h>
 
 typedef struct proc *Proc;
 struct proc {
@@ -55,9 +58,11 @@ int filaInserir(Fila fila) {
             perror("Erro ao alocar memória para novo processo");
             return 0;
         }
+        int random_number = (rand() % 5) + 1;
         novo->pid = pid;
+        novo->time = random_number;
         novo->prox = NULL;
-
+        printf("\nCriando process %d com %i segundos para execução\n",pid,random_number);
         if (!fila->ini) { ;
             fila->ini = novo;
             fila->fim = novo;
@@ -77,6 +82,22 @@ void filaLiberar(Fila fila) {
     if (fila) {
         Proc aux = fila->ini;
         while (aux) {
+            kill(aux->pid,SIGKILL);
+            Proc temp = aux;
+            aux = aux->prox;
+            free(temp); 
+        }
+        free(fila);
+    }
+}
+
+void FIFO(Fila fila) {
+    if (fila) {
+        Proc aux = fila->ini;
+        while (aux) {
+            printf("\nExecutando processo %d com %i segundos de execução\n", aux->pid, aux->time);
+            sleep(aux->time);
+            kill(aux->pid,SIGKILL);
             Proc temp = aux;
             aux = aux->prox;
             free(temp); 
@@ -95,17 +116,35 @@ int main(void) {
     int choice = 1;
 
     while (1) {
-        printf("Escolha uma opção: 1 para inserir, 2 para exibir, 0 para sair: ");
+        printf("Escolha uma opção:\n0 para sair\n1 para criar um processo\n2 para exibir\n3 para FIFO\n");
+        if (!fila) {
+            Fila fila = filaCriar();
+        }
         scanf("%i", &choice);
         switch (choice){    
-        case 1: {
-            filaInserir(fila);
-        case 2: {
-            filaExibir(fila);
-        case 0: {
-            break; 
-        default:
-            printf("Opção inválida.\n");
+            case 1: { 
+                filaInserir(fila);
+                break;
+            }
+            case 2: { 
+                if (fila->ini)
+                    filaExibir(fila);
+                break;
+            }
+            case 0: {
+                filaLiberar(fila); 
+                Fila fila = filaCriar();
+                break;
+            }
+            case 3: {
+                FIFO(fila);
+                Fila fila = filaCriar();
+                break;            
+            }
+            default: {
+                printf("Opção inválida.\n");
+                break;
+            }
         }
     }
 
