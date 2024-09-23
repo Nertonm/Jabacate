@@ -105,28 +105,45 @@ void FIFO(Fila fila) {
         free(fila);
     }
 }
-
-void SJF(Fila fila){
-     if (fila) {
-        Proc aux = fila->ini;
-        Proc aux2 = aux;
-        while (aux) {
-            if (aux->prox->time < aux->time)
-                aux = aux2;
-                aux->prox = aux2;
-            aux = aux->prox;     
-        }
+void SJF(Fila fila) {
+    if (fila && fila->ini) {
+        Proc aux, aux2, prev_aux;
+        int trocado;
+        do {
+            trocado = 0;
+            aux = fila->ini;
+            prev_aux = NULL;
+            while (aux && aux->prox) {
+                aux2 = aux->prox;
+                if (aux->time > aux2->time) {
+                    aux->prox = aux2->prox;
+                    aux2->prox = aux;
+                    if (prev_aux == NULL) {
+                        fila->ini = aux2;
+                    } else {
+                        prev_aux->prox = aux2;
+                    }
+                    trocado = 1;
+                    prev_aux = aux2;
+                } else {
+                    prev_aux = aux;
+                    aux = aux->prox;
+                }
+            }
+        } while (trocado);
         aux = fila->ini;
         while (aux) {
-            printf("\nExecutando processo %d com %i segundos de execução\n", aux->pid, aux->time);
-            sleep(aux->time);
-            kill(aux->pid,SIGKILL);
+            printf("\nExecutando processo %d com %i segundos de execução", aux->pid, aux->time);
+            sleep(aux->time);  
+            if (kill(aux->pid, SIGKILL) == -1) {
+                perror("Erro ao matar o processo");
+            }
             Proc temp = aux;
             aux = aux->prox;
-            free(temp); 
+            free(temp);
         }
     }
-}   
+}
 
 
 int main(void) {
@@ -139,12 +156,17 @@ int main(void) {
     int choice = 1;
 
     while (1) {
-        printf("Escolha uma opção:\n0 para sair\n1 para criar um processo\n2 para exibir\n3 para FIFO\n");
+        printf("\nEscolha uma opção:\n0 para sair\n1 para criar um processo\n2 para exibir\n3 para FIFO\n4 para SJF\n5 para Round Robin\n6 para Prioridade\n");
         if (!fila) {
             Fila fila = filaCriar();
         }
         scanf("%i", &choice);
         switch (choice){    
+            case 0: {
+                filaLiberar(fila); 
+                Fila fila = filaCriar();
+                break;
+            }
             case 1: { 
                 filaInserir(fila);
                 break;
@@ -154,20 +176,16 @@ int main(void) {
                     filaExibir(fila);
                 break;
             }
-            case 0: {
-                filaLiberar(fila); 
-                Fila fila = filaCriar();
-                break;
-            }
             case 3: {
                 FIFO(fila);
                 Fila fila = filaCriar();
                 break;            
             }
-            case 4:{
+            case 4: {
                 SJF(fila);
                 break;
             }
+            case 5: {
             default: {
                 printf("Opção inválida.\n");
                 break;
