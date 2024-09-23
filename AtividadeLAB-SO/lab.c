@@ -106,6 +106,29 @@ void FIFO(Fila fila) {
     }
 }
 
+void SJF(Fila fila){
+     if (fila) {
+        Proc aux = fila->ini;
+        Proc aux2 = aux;
+        while (aux) {
+            if (aux->prox->time < aux->time)
+                aux = aux2;
+                aux->prox = aux2;
+            aux = aux->prox;     
+        }
+        aux = fila->ini;
+        while (aux) {
+            printf("\nExecutando processo %d com %i segundos de execução\n", aux->pid, aux->time);
+            sleep(aux->time);
+            kill(aux->pid,SIGKILL);
+            Proc temp = aux;
+            aux = aux->prox;
+            free(temp); 
+        }
+    }
+}   
+
+
 int main(void) {
     Fila fila = filaCriar();
     if (!fila) {
@@ -140,6 +163,10 @@ int main(void) {
                 FIFO(fila);
                 Fila fila = filaCriar();
                 break;            
+            }
+            case 4:{
+                SJF(fila);
+                break;
             }
             default: {
                 printf("Opção inválida.\n");
