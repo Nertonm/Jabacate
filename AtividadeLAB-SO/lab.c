@@ -61,6 +61,7 @@ int filaInserir(Fila fila) {
         int random_number = (rand() % 5) + 1;
         novo->pid = pid;
         novo->time = random_number;
+        novo->nice = 0;
         novo->prox = NULL;
         printf("\nCriando process %d com %i segundos para execução\n",pid,random_number);
         if (!fila->ini) { ;
@@ -135,9 +136,6 @@ void SJF(Fila fila) {
         while (aux) {
             printf("\nExecutando processo %d com %i segundos de execução", aux->pid, aux->time);
             sleep(aux->time);  
-            if (kill(aux->pid, SIGKILL) == -1) {
-                perror("Erro ao matar o processo");
-            }
             Proc temp = aux;
             aux = aux->prox;
             free(temp);
@@ -145,6 +143,83 @@ void SJF(Fila fila) {
     }
 }
 
+void round_robin(Fila fila, int quantum){
+if (fila->ini) {
+        Proc aux = fila->ini;
+        Proc ant = NULL;
+        fila->fim->prox = fila->ini;
+        do{
+            printf("\nExecutando processo %d com %i segundos de execução com quantum de %i", aux->pid, aux->time, quantum);
+            if (quantum >= aux->time && aux->time > 0){
+                sleep(aux->time);
+                kill(aux->pid,SIGKILL);
+                aux->time = 0;
+                printf("\nProcesso %d terminado", aux->pid);
+                aux = aux->prox;
+            }
+            else if(aux->time > 0){
+                sleep(quantum);
+                aux->time -= quantum;
+            }
+            aux = aux->prox;
+        }while(aux != fila->ini);
+        free(fila);
+    }
+}
+
+void Prioridade(Fila fila){
+    if (fila && fila->ini) {
+        Proc aux, aux2, prev_aux;
+        int trocado;
+        do {
+            trocado = 0;
+            aux = fila->ini;
+            prev_aux = NULL;
+            while (aux && aux->prox) {
+                aux2 = aux->prox;
+                if (aux->nice  <aux2->nice) {
+                    aux->prox = aux2->prox;
+                    aux2->prox = aux;
+                    if (prev_aux == NULL) {
+                        fila->ini = aux2;
+                    } else {
+                        prev_aux->prox = aux2;
+                    }
+                    trocado = 1;
+                    prev_aux = aux2;
+                } else {
+                    prev_aux = aux;
+                    aux = aux->prox;
+                }
+            }
+        } while (trocado);
+        aux = fila->ini;
+        while (aux) {
+            printf("\nExecutando processo %d com %i segundos de execução e prioridade %i", aux->pid, aux->time, aux->nice);
+            sleep(aux->time);  
+            Proc temp = aux;
+            aux = aux->prox;
+            free(temp);
+        }
+    }
+}
+
+void definirPrioridade(Fila fila){
+    int choice = 0;
+    printf("Escolha um processo da lista:\n");
+    filaExibir(fila);
+    do{
+        scanf("%i",&choice);
+    }while(choice > fila->qtd || choice < 0);
+    choice--;
+    Proc aux = fila->ini;
+    for (int i = 0; i < choice; i++)
+       aux = aux->prox;
+    printf("Nivel de Prioridade: ");
+    scanf("%i",&choice);
+    aux->nice = choice;
+    return;
+}
 
 int main(void) {
     Fila fila = filaCriar();
@@ -154,9 +229,9 @@ int main(void) {
     }
 
     int choice = 1;
-
+    int quantum = 0;
     while (1) {
-        printf("\nEscolha uma opção:\n0 para sair\n1 para criar um processo\n2 para exibir\n3 para FIFO\n4 para SJF\n5 para Round Robin\n6 para Prioridade\n");
+        printf("\nEscolha uma opção:\n0 para sair\n1 para criar um processo\n2 para atribuir nice\n3 para exibir\n4 para FIFO\n5 para SJF\n6 para Round Robin\n7 para Prioridade\n");
         if (!fila) {
             Fila fila = filaCriar();
         }
@@ -171,21 +246,36 @@ int main(void) {
                 filaInserir(fila);
                 break;
             }
-            case 2: { 
+            case 2: {
+                definirPrioridade(fila);
+                break;
+            }
+            case 3: { 
                 if (fila->ini)
                     filaExibir(fila);
                 break;
             }
-            case 3: {
+            case 4: {
                 FIFO(fila);
                 Fila fila = filaCriar();
                 break;            
             }
-            case 4: {
+            case 5: {
                 SJF(fila);
                 break;
             }
-            case 5: {
+            case 6: {
+                printf("Valor quantum? ");
+                scanf("%i", &quantum);
+                round_robin(fila, quantum);
+                Fila fila = filaCriar();
+                break;
+            }
+            case 7: {
+                Prioridade(fila);
+                Fila fila = filaCriar();
+                break;
+            }
             default: {
                 printf("Opção inválida.\n");
                 break;
