@@ -251,8 +251,7 @@ int main(void) {
                 break;
             }
             case 3: { 
-                if (fila->ini)
-                    filaExibir(fila);
+                filaExibir(fila);
                 break;
             }
             case 4: {
@@ -262,6 +261,7 @@ int main(void) {
             }
             case 5: {
                 SJF(fila);
+                Fila fila = filaCriar();
                 break;
             }
             case 6: {
