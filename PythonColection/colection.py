@@ -30,10 +30,26 @@ def aula2_question3():
     for nota in choice:
         media += int (nota) / 3
     print(f"Media: {media:.2f}")
+
+def aula2_question4():
+    turple = (input("Digite seu nome: "),
+              input("Digite sua data de Nascimento: "),
+              input("Digite seu email: "))
+    print(f"""
+        \nDados Inseridos:
+        Nome: {turple[0]}
+        Data de Nascimento: {turple[1]}
+        E-mail: {turple[2]}
+    """)
+
+def aula2_question5():
+    
 def main():
     choice = int(input("Escolha: "))
     if choice == 1: aula2_question1()
     elif choice == 2: aula2_question2()
     elif choice == 3: aula2_question3()
+    elif choice == 4: aula2_question4()
+
 if __name__ == '__main__':
     main()
