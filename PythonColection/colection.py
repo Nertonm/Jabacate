@@ -43,13 +43,26 @@ def aula2_question4():
     """)
 
 def aula2_question5():
-    
+    print(input("Digite seu nome:") + " ,daqui a 5 anos você terá "
+    , int(input("Digite sua idade: "))+ 5)
+
+def aula2_question6():
+    celsius = input("Graus celsius: ")
+    print( celsius + " graus Celsius é equivalente a " ,
+           ((int(celsius) * 9))/5 +32 ,"graus Fahrenheit.")
+
+def aula2_question7():
+    segundos = int(input("Numero de segundos: "))
+    print(segundos // 3600,":",(segundos % 3600)//60)
 def main():
     choice = int(input("Escolha: "))
-    if choice == 1: aula2_question1()
-    elif choice == 2: aula2_question2()
-    elif choice == 3: aula2_question3()
-    elif choice == 4: aula2_question4()
+    if choice == 1 : aula2_question1()
+    elif choice == 2 : aula2_question2()
+    elif choice == 3 : aula2_question3()
+    elif choice == 4 : aula2_question4()
+    elif choice == 5 : aula2_question5()
+    elif choice == 6 : aula2_question6()
+    elif choice == 7 : aula2_question7()
 
 if __name__ == '__main__':
     main()
