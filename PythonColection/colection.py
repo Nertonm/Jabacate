@@ -87,9 +87,33 @@ def aula2_question13():
               float(input("Qual o seu Salario? ")),)
     print(f"Funcionário: {turple[0]}, Cargo: {turple[1]}, Salário: R$ {turple[2]:.2f}")
 
-def travesia_do_deserto():
+def FIFO(lista):
+    for x in range(len(lista)):
+        proc = lista.pop(0)
+        print(f"Executando o processo {proc}")
+
+def SJF(lista):
+    lista.sort()
+    FIFO(lista)
+
+def rounnd_roblin(lista):
+    quantum = int(input("Quantum? "))
+    while lista:
+        for indice, x in enumerate(lista):
+            if x - quantum <= 0:
+                print(f"Elemento {listaa[indice]} saindo")
+                lista.pop(indice)
+            else:
+                lista[indice] -= quantum
+def prioriade(lista):
+    lista.sort()
+    i = 0
+    while lista:
+        print(f"Terminando o process {lista[-1]}")
+        lista.pop(-1)
 
 def main():
+    lista = [1,321,212,2313,212,2321,212]
     choice = int(input("Escolha: "))
     if choice == 1 : aula2_question1()
     elif choice == 2 : aula2_question2()
@@ -104,8 +128,10 @@ def main():
     elif choice == 11 : aula2_question11()
     elif choice == 12 : aula2_question12()
     elif choice == 13 : aula2_question13()
-    elif choice == 14 : travesia_do_deserto()
-
+    elif choice == 14 : FIFO(lista)
+    elif choice == 15 : SJF(lista)
+    elif choice == 16 : rounnd_roblin(lista)
+    elif choice == 17 : prioriade(lista)
 
 if __name__ == '__main__':
     main()
