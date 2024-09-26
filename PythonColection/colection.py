@@ -54,6 +54,41 @@ def aula2_question6():
 def aula2_question7():
     segundos = int(input("Numero de segundos: "))
     print(segundos // 3600,":",(segundos % 3600)//60)
+
+def aula2_question8():
+    yrs = int(input("Quantos anos você viveu? "))
+    print(f"{yrs*12} meses "
+          f"{yrs*52} semanas"
+          f" {yrs*365} dias")
+
+def aula2_question9():
+    dois_numeros = (int(input("Digite dois numeros: ")),int(input("")))
+    print(f"Soma: {dois_numeros[0] + dois_numeros[1]}, "
+         f"Subtração: {dois_numeros[0] - dois_numeros[1]}, "
+         f"Multiplicação: {dois_numeros[0] * dois_numeros[1]}, "
+         f"Divisão: {dois_numeros[0] / dois_numeros[1]}")
+
+def aula2_question10():
+    print(f"{int(input("Raid do Circulo: ")) ** 2 * 3.14159}" + " área do circulo")
+
+def aula2_question11():
+    turple = (input("Qual o seu nome? "),
+              input("Onde você mora? "))
+    print(f"Olá,{turple[0]}! Seja bem-vindo a {turple[1]}")
+
+def aula2_question12():
+    x = int(input("Digite um numero: "))
+    y = int(input("Digite outro numero: "))
+    print(f"A soma de {x} e {y} é {x+y}")
+
+def aula2_question13():
+    turple = (input("Qual o seu Nome? "),
+              input("Qual o seu Cargo? "),
+              float(input("Qual o seu Salario? ")),)
+    print(f"Funcionário: {turple[0]}, Cargo: {turple[1]}, Salário: R$ {turple[2]:.2f}")
+
+def travesia_do_deserto():
+
 def main():
     choice = int(input("Escolha: "))
     if choice == 1 : aula2_question1()
@@ -63,6 +98,14 @@ def main():
     elif choice == 5 : aula2_question5()
     elif choice == 6 : aula2_question6()
     elif choice == 7 : aula2_question7()
+    elif choice == 8 : aula2_question8()
+    elif choice == 9 : aula2_question9()
+    elif choice == 10 : aula2_question10()
+    elif choice == 11 : aula2_question11()
+    elif choice == 12 : aula2_question12()
+    elif choice == 13 : aula2_question13()
+    elif choice == 14 : travesia_do_deserto()
+
 
 if __name__ == '__main__':
     main()
