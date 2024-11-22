@@ -1,6 +1,8 @@
 package UIconsole;
 
 import java.util.Scanner;
+
+import exceptions.ContaNotFoundException;
 import service.ContaFacade;
 
 import exceptions.InsufficientBalanceException;
@@ -24,32 +26,42 @@ public class UIconsole {
             System.out.println("5. Listar contas");
             System.out.println("6. Deletar conta");
             System.out.println("7. Sair");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            switch (choice) {
-                case 1:
-                    addConta();
-                    break;
-                case 2:
-                    depositar();
-                    break;
-                case 3:
-                    retirar();
-                    break;
-                case 4:
-                    verificarSaldo();
-                    break;
-                case 5:
-                    getAllContas();
-                    break;
-                case 6:
-                    deleteConta();
-                    break;
-                case 7:
-                    System.out.println("Obrigado por usar o sistema bancário.");
-                    return;
-                default:
-                    System.out.println("Opção Invalida.");
+            int choice = Integer.parseInt(scanner.nextLine());
+            try {
+                switch (choice) {
+                    case 1:
+                        addConta();
+                        break;
+                    case 2:
+                        depositar();
+                        break;
+                    case 3:
+                        retirar();
+                        break;
+                    case 4:
+                        verificarSaldo();
+                        break;
+                    case 5:
+                        getAllContas();
+                        break;
+                    case 6:
+                        deleteConta();
+                        break;
+                    case 7:
+                        System.out.println("Obrigado por usar o sistema bancário.");
+                        return;
+                    default:
+                        System.out.println("Opção Invalida.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número.");
+            }
+            catch (ContaNotFoundException e) {
+                System.out.println(e.getMessage());
+            } catch (InsufficientBalanceException e) {
+                System.out.println("Saldo insuficiente.");
+            } catch (Exception e) {
+                System.out.println("Ocorreu um erro: " + e.getMessage());
             }
         }
     }
@@ -63,30 +75,48 @@ public class UIconsole {
     }
 
     private void depositar() {
-        System.out.print("Digite o nome do titular da conta: ");
-        String name = scanner.nextLine();
-        System.out.print("Digite a quantia a ser depositada: ");
-        double amount = scanner.nextDouble();
-        if (contaFacade.depositar(name, amount)) {
-            System.out.println("Depósito de R$" + amount + "realizado com sucesso.");
-        } else {
-            System.out.println("Conta not found.");
+        try {
+            System.out.print("Digite o nome do titular da conta: ");
+            String name = scanner.nextLine();
+            System.out.print("Digite a quantia a ser depositada: ");
+            double amount = Double.parseDouble(scanner.nextLine());
+            if (amount <= 0) {
+                throw new IllegalArgumentException("O valor do depósito deve ser positivo.");
+            }
+            if (contaFacade.depositar(name, amount)) {
+                System.out.println("Depósito de R$" + amount + "realizado com sucesso.");
+            } else {
+                System.out.println("Conta não encontrada.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Por favor, insira um número válido.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 
     private void retirar() {
-        System.out.print("Digite o nome do titular da conta: ");
-        String name = scanner.nextLine();
-        System.out.print("Digite a quantia a ser retirada: ");
-        double amount = scanner.nextDouble();
         try {
-            if (contaFacade.retirar(name, amount)) {
-                System.out.println("Saque de R$" + amount + " realizada com sucesso.");
-            } else {
-                System.out.println("Conta não encontrada.");
+            System.out.print("Digite o nome do titular da conta: ");
+            String name = scanner.nextLine();
+            System.out.print("Digite a quantia a ser retirada: ");
+            double amount = Double.parseDouble(scanner.nextLine());
+            if (amount <= 0) {
+                throw new IllegalArgumentException("O valor da retirada deve ser positivo.");
             }
-        } catch (InsufficientBalanceException e) {
-            System.out.println("Saldo insuficiente.");
+            try {
+                if (contaFacade.retirar(name, amount)) {
+                    System.out.println("Saque de R$" + amount + " realizada com sucesso.");
+                } else {
+                    System.out.println("Conta não encontrada.");
+                }
+            } catch (InsufficientBalanceException e) {
+                System.out.println("Saldo insuficiente.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Por favor, insira um número válido.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 
