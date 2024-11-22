@@ -108,7 +108,7 @@ def rounnd_roblin(lista):
 def prioriade(lista):
     lista.sort()
     i = 0
-    while lista:
+    while 1lista:
         print(f"Terminando o process {lista[-1]}")
         lista.pop(-1)
 
