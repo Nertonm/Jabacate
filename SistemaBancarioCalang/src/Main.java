@@ -1,5 +1,12 @@
+import UIconsole.UIconsole;
+import service.ContaFacade;
+import service.ContaService;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        ContaService contaService = new ContaService();
+        ContaFacade contaFacade = new ContaFacade(contaService);
+        UIconsole uiConsole = new UIconsole(contaFacade);
+        uiConsole.start();
     }
 }

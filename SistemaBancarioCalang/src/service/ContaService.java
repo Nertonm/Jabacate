@@ -8,90 +8,70 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import exceptions.InsufficientBalanceException;
-import exceptions.ContaNotFoundException;
 
 public class ContaService {
     private static final Logger logger = Logger.getLogger(ContaService.class.getName());
     private final ContasRepository contasRepository;
 
-    public ContaService(ContasRepository contasRepository) {
-        this.contasRepository = contasRepository;
+    public ContaService() {
+        this.contasRepository = new ContasRepository();
     }
 
-    public void addConta(Conta conta) {
+    public void addConta(String name, double balance) {
+        Conta conta = new Conta(name, balance);
         contasRepository.addConta(conta);
         logger.log(Level.INFO, "Conta added: {0}", conta);
-    }
-
-    public Optional<Conta> getContaById(int id) {
-        Optional<Conta> contaOpt = contasRepository.getContaById(id);
-        if (contaOpt.isEmpty()){
-            logger.log(Level.WARNING, "Conta with id {0} not found", id);
-            throw new ContaNotFoundException("Conta com id " + id + " não encontrada.");
-        }
-        return contaOpt;
     }
 
     public List<Conta> getAllContas() {
         return contasRepository.getAllContas();
     }
 
-    public boolean updateConta(Conta updatedConta) {
-        boolean result = contasRepository.updateConta(updatedConta);
+    public boolean deleteConta(String name) {
+        boolean result = contasRepository.deleteConta(name);
         if (result) {
-            logger.log(Level.INFO, "Conta updated: {0}", updatedConta);
+            logger.log(Level.INFO, "Conta with name {0} deleted", name);
         } else {
-            logger.log(Level.WARNING, "Conta with id {0} not found", updatedConta.getId());
-            throw new ContaNotFoundException("Conta com id " + updatedConta.getId() + " não encontrada.");
+            logger.log(Level.WARNING, "Failed to delete Conta with name {0}", name);
         }
         return result;
     }
 
-    public boolean deleteConta(int id) {
-        boolean result = contasRepository.deleteConta(id);
-        if (result) {
-            logger.log(Level.INFO, "Conta with id {0} deleted", id);
-        } else {
-            logger.log(Level.WARNING, "Failed to delete Conta with id {0}", id);
-        }
-        return result;
-    }
-
-    public boolean depositar(int id, double amount) {
-        Optional<Conta> contaOpt = contasRepository.getContaById(id);
+    public boolean depositar(String name, double amount) {
+        Optional<Conta> contaOpt = contasRepository.getContaByName(name);
         if (contaOpt.isPresent()) {
             Conta conta = contaOpt.get();
             conta.setBalance(conta.getBalance() + amount);
-            logger.log(Level.INFO, "Deposited {0} to Conta with id {1}", new Object[]{amount, id});
+            logger.log(Level.INFO, "Deposited {0} to Conta with id {1}", new Object[]{amount, name});
             return true;
         }
-        logger.log(Level.WARNING, "Failed to deposit {0} to Conta with id {1}", new Object[]{amount, id});
+        logger.log(Level.WARNING, "Failed to deposit {0} to Conta with id {1}", new Object[]{amount, name});
         return false;
     }
 
-    public  boolean retirar(int id, double amount) {
-        Optional<Conta> contaOpt = contasRepository.getContaById(id);
+    public  boolean retirar(String name, double amount) {
+        Optional<Conta> contaOpt = contasRepository.getContaByName(name);
         if (contaOpt.isPresent()) {
             Conta conta = contaOpt.get();
             if (conta.getBalance() >= amount) {
                 conta.setBalance(conta.getBalance() - amount);
-                logger.log(Level.INFO, "Withdrew {0} from Conta with id {1}", new Object[]{amount, id});
+                logger.log(Level.INFO, "Withdrew {0} from Conta with name {1}", new Object[]{amount, name});
                 return true;
             } else {
-                logger.log(Level.WARNING, "Insufficient balance for Conta with id {0}", id);
-                throw new InsufficientBalanceException("Saldo insuficiente para a Conta com id " + id);
+                logger.log(Level.WARNING, "Insufficient balance for Conta with name {0}",  name);
+                throw new InsufficientBalanceException("Saldo insuficiente para a Conta com name " + name);
             }
         }
-        logger.log(Level.WARNING, "Failed to withdraw {0} from Conta with id {1}", new Object[]{amount, id});
+        logger.log(Level.WARNING, "Failed to withdraw {0} from Conta with name {1}", new Object[]{amount, name});
         return false;
     }
 
-    public double verificarSaldo(int id) {
-        Optional<Conta> contaOpt = contasRepository.getContaById(id);
+    public double verificarSaldo(String name) {
+        Optional<Conta> contaOpt = contasRepository.getContaByName(name);
         if (contaOpt.isPresent()) {
             return contaOpt.get().getBalance();
         }
-        logger.log(Level.WARNING, "Failed to verify balance for Conta with id {0}", id);
+        logger.log(Level.WARNING, "Failed to verify balance for Conta with id {0}", name);
         return -1;
     }
 }
