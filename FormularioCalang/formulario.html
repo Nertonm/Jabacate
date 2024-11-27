@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Responsivo</title>
+    <style>
+        body {
+            font-family: Comic-Sans, Comic-Sans-MS;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header, footer {
+            background-color: #f8f8f8;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2em;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 2em;
+            border-radius: 5px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 0.75em;
+            border: none;
+            border-radius: 3px;
+            background-color: #007BFF;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Formulário</h1>
+    </header>
+    <main>
+        <form id="form">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" required autocomplete="name">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required autocomplete="new-password">
+
+            <input type="submit" value="Enviar">
+        </form>
+    </main>
+    <footer>
+        <p>&copy; Thiago - Formulário</p>
+    </footer>
+    <script>
+    </script>
+</body>
+</html>
