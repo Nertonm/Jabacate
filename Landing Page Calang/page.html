@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#quote">Quote of The Day</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section id="home">
+    <h1>Home</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis, ex a aliquet interdum, massa ex feugiat elit, non facilisis felis augue.</p>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>Phasellus eleifend molestie ante sed cursus. Quisque viverra sit amet massa ut bibendum. Sed fringilla fringilla nisi, non laoreet lacus. Nunc accumsan erat mauris, vitae elementum est ultrices vel. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean sit amet enim sit amet lectus imperdiet facilisis porta porttitor tellus. Maecenas mollis sed eros eu molestie. .</p>
+  </section>
+
+  <section id="quote">
+    <h2>Quote of the Day</h2>
+    <p id="quoteText">Loading...</p>
+    <p id="quoteAuthor"></p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2024 Landing Page</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
